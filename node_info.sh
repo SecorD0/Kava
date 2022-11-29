@@ -71,9 +71,9 @@ if [ ! -n "$keyring_backend" ]; then
 	keyring_backend=`$daemon config keyring-backend 2>/dev/null`
 fi
 if [ "$network" == "mainnet" ]; then
-	global_rpc=""
+	global_rpc="https://kava-mainnet.chainode.tech:443"
 	explorer_url_template="https://www.mintscan.io/kava/validators/"
-	current_block=`wget -qO- https://api.mintscan.io/v1/kava/block?limit=1 | jq ".[0].height"`
+	current_block=`wget -qO- "${global_rpc}/abci_info" | jq -r ".result.response.last_block_height"`
 else
 	global_rpc="https://kava-testnet.chainode.tech:443"
 	explorer_url_template=""
